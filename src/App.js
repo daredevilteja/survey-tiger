@@ -2,6 +2,7 @@ import logo from "./logo.png";
 import "./App.css";
 import { Button } from "reactstrap";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import CreateSurvey from "./components/create-survey";
 
 function App() {
   return (
@@ -11,7 +12,9 @@ function App() {
           <img src={logo} className="App-logo" alt="logo" />
         </header>
         <Switch>
-          <Route path="/create">Create Survey</Route>
+          <Route path="/create">
+            <CreateSurvey />
+          </Route>
           <Route path="/take">Take Survey</Route>
           <Route path="/">
             <Link to="/create">
