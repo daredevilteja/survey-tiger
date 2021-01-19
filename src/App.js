@@ -7,7 +7,8 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <Button color="primary">primary</Button>{" "}
+        <Button className="survey-main-btn">Create Survey</Button>
+        <Button className="survey-main-btn">Take Survey</Button>
       </header>
     </div>
   );
