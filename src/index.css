@@ -19,3 +19,20 @@ code {
   margin: 20px;
   border: none;
 }
+
+.App .question-container {
+  margin: 20px;
+  width: 400px;
+}
+
+.App .question-container .input-grp {
+  margin-bottom: 5px;
+}
+
+.App .question-container .options-text {
+  font-size: 15px;
+  text-align: left;
+  font-weight: bold;
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
