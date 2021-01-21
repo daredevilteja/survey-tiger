@@ -1,10 +1,24 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+export const createSurvey = createAsyncThunk(
+  "surveys/createSurvey",
+  async (_, thunkAPI) => {
+    const newSurveyId = thunkAPI.getState().surveys.length + 1;
+    return newSurveyId;
+  }
+);
 
 export const surveySlice = createSlice({
-  name: "counter",
-  initialState: 0,
-  reducers: {
-    increment: (state) => state + 1,
-    decrement: (state) => state - 1,
+  name: "surveys",
+  initialState: [],
+  reducers: {},
+  extraReducers: {
+    [createSurvey.fulfilled]: (state, action) => {
+      state.push({
+        questions: [],
+        surveyId: action.payload,
+        isPublished: false,
+      });
+    },
   },
 });
