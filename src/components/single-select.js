@@ -34,7 +34,7 @@ function SingleSelect() {
       type: "single",
     };
     dispatch(surveySlice.actions.addQuestion(payload));
-    history.pushState("/create/" + surveyId + "?clear=true");
+    history.push("/create/" + surveyId + "?clear=true");
   };
 
   const publishQuestion = () => {

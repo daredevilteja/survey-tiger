@@ -47,7 +47,18 @@ function MultiSelect() {
       type: "multiple",
     };
     dispatch(surveySlice.actions.addQuestion(payload));
-    history.pushState("/create/" + surveyId + "?clear=true");
+    history.push("/create/" + surveyId + "?clear=true");
+  };
+
+  const publishQuestion = () => {
+    const payload = {
+      options,
+      question,
+      surveyId,
+      type: "multiple",
+    };
+    dispatch(surveySlice.actions.addQuestion(payload));
+    history.push("/confirm/" + surveyId);
   };
 
   return (
@@ -96,7 +107,11 @@ function MultiSelect() {
           >
             Add Question
           </Button>
-          <Button className="survey-main-btn" disabled={isButtonDisabled()}>
+          <Button
+            className="survey-main-btn"
+            onClick={publishQuestion}
+            disabled={isButtonDisabled()}
+          >
             Publish
           </Button>
         </div>

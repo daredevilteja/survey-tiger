@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { Button } from "reactstrap";
 import { useHistory, useParams } from "react-router-dom";
