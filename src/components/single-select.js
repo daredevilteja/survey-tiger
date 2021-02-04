@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useParams, useHistory } from "react-router-dom";
+import { surveySlice } from "../store/surveySlice";
+import { useDispatch } from "react-redux";
 import {
   Button,
   InputGroup,
@@ -8,6 +11,9 @@ import {
 } from "reactstrap";
 
 function SingleSelect() {
+  const { surveyId } = useParams();
+  const history = useHistory();
+  const dispatch = useDispatch();
   const [options, setOptions] = useState(["", ""]);
   const [question, setQuestion] = useState("");
 
@@ -19,6 +25,28 @@ function SingleSelect() {
   const isButtonDisabled = () =>
     question.trim() === "" ||
     options.find((opt) => opt.trim() === "") !== undefined;
+
+  const addQuestion = () => {
+    const payload = {
+      options,
+      question,
+      surveyId,
+      type: "single",
+    };
+    dispatch(surveySlice.actions.addQuestion(payload));
+    history.pushState("/create/" + surveyId + "?clear=true");
+  };
+
+  const publishQuestion = () => {
+    const payload = {
+      options,
+      question,
+      surveyId,
+      type: "single",
+    };
+    dispatch(surveySlice.actions.addQuestion(payload));
+    history.push("/confirm/" + surveyId);
+  };
 
   return (
     <div className="question-container">
@@ -56,10 +84,18 @@ function SingleSelect() {
         </InputGroupAddon>
       </InputGroup>
       <div className="question-buttons">
-        <Button className="survey-main-btn" disabled={isButtonDisabled()}>
+        <Button
+          className="survey-main-btn"
+          onClick={addQuestion}
+          disabled={isButtonDisabled()}
+        >
           Add Question
         </Button>
-        <Button className="survey-main-btn" disabled={isButtonDisabled()}>
+        <Button
+          className="survey-main-btn"
+          onClick={publishQuestion}
+          disabled={isButtonDisabled()}
+        >
           Publish
         </Button>
       </div>

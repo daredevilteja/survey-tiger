@@ -1,18 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-import { useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import MultiSelect from "./multi-select";
 import SingleSelect from "./single-select";
 
 function CreateSurvey() {
   const { surveyId } = useParams();
+  const query = useLocation().search;
+  const history = useHistory();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [dropdownText, setDropdownText] = useState("Select Question Type");
+
+  useEffect(() => {
+    if (query === "?clear=true") {
+      setDropdownText("Select Question Type");
+      history.push("/create" + surveyId);
+    }
+  }, [query, history, surveyId]);
 
   const toggle = () => setDropdownOpen((prevState) => !prevState);
 

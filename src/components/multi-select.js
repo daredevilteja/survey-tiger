@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useParams, useHistory } from "react-router-dom";
+import { surveySlice } from "../store/surveySlice";
+import { useDispatch } from "react-redux";
 import {
   Button,
   InputGroup,
@@ -8,6 +11,9 @@ import {
 } from "reactstrap";
 
 function MultiSelect() {
+  const { surveyId } = useParams();
+  const history = useHistory();
+  const dispatch = useDispatch();
   const [options, setOptions] = useState([""]);
   const [question, setQuestion] = useState("");
 
@@ -32,6 +38,17 @@ function MultiSelect() {
   const isButtonDisabled = () =>
     question.trim() === "" ||
     options.find((opt) => opt.trim() === "") !== undefined;
+
+  const addQuestion = () => {
+    const payload = {
+      options,
+      question,
+      surveyId,
+      type: "multiple",
+    };
+    dispatch(surveySlice.actions.addQuestion(payload));
+    history.pushState("/create/" + surveyId + "?clear=true");
+  };
 
   return (
     <div className="question-container">
@@ -72,7 +89,11 @@ function MultiSelect() {
       ))}
       {options.length > 3 ? (
         <div className="question-buttons">
-          <Button className="survey-main-btn" disabled={isButtonDisabled()}>
+          <Button
+            className="survey-main-btn"
+            onClick={addQuestion}
+            disabled={isButtonDisabled()}
+          >
             Add Question
           </Button>
           <Button className="survey-main-btn" disabled={isButtonDisabled()}>
