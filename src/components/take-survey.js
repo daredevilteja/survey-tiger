@@ -6,6 +6,7 @@ function TakeSurvey() {
   const surveyIDs = useSelector((globalStore) =>
     globalStore.surveys.filter((s) => s.isPublished).map((s) => s.surveyId)
   );
+
   return (
     <>
       {surveyIDs.map((surveyId) => (

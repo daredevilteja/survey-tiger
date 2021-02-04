@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { surveySlice } from "../store/surveySlice";
 import { useDispatch } from "react-redux";
+import { surveySlice } from "../store/surveySlice";
 import {
   Button,
   InputGroup,
@@ -17,36 +17,36 @@ function SingleSelect() {
   const [options, setOptions] = useState(["", ""]);
   const [question, setQuestion] = useState("");
 
-  const setOptionInArray = (val, idx) => {
-    options[idx] = val;
+  const setOptionInArray = (value, optionIdx) => {
+    options[optionIdx] = value;
     setOptions([...options]);
   };
 
-  const isButtonDisabled = () =>
+  const isQuestionAddPublishDisabled = () =>
     question.trim() === "" ||
     options.find((opt) => opt.trim() === "") !== undefined;
 
-  const addQuestion = () => {
+  const addQuestionClickAction = () => {
     const payload = {
       options,
       question,
       surveyId,
-      type: "single",
+      type: "single"
     };
     dispatch(surveySlice.actions.addQuestion(payload));
-    history.push("/create/" + surveyId + "?clear=true");
-  };
+    history.push('/create/' + surveyId + '?clear=true');
+  }
 
   const publishQuestion = () => {
     const payload = {
       options,
       question,
       surveyId,
-      type: "single",
+      type: "single"
     };
     dispatch(surveySlice.actions.addQuestion(payload));
-    history.push("/confirm/" + surveyId);
-  };
+    history.push('/confirm/' + surveyId);
+  }
 
   return (
     <div className="question-container">
@@ -55,7 +55,7 @@ function SingleSelect() {
           <InputGroupText>?</InputGroupText>
         </InputGroupAddon>
         <Input
-          placeholder="Enter your Question"
+          placeholder="Your Question"
           onChange={(e) => setQuestion(e.target.value)}
           value={question}
         />
@@ -63,9 +63,9 @@ function SingleSelect() {
       <p className="options-text">Options</p>
       <InputGroup className="input-grp">
         <Input
-          placeholder="Option1"
-          onChange={(e) => setOptionInArray(e.target.value, 0)}
+          placeholder="Option 1"
           value={options[0]}
+          onChange={(e) => setOptionInArray(e.target.value, 0)}
         />
         <InputGroupAddon addonType="append">
           <InputGroupText>+</InputGroupText>
@@ -74,9 +74,9 @@ function SingleSelect() {
       </InputGroup>
       <InputGroup className="input-grp">
         <Input
-          placeholder="Option2"
-          onChange={(e) => setOptionInArray(e.target.value, 1)}
+          placeholder="Option 2"
           value={options[1]}
+          onChange={(e) => setOptionInArray(e.target.value, 1)}
         />
         <InputGroupAddon addonType="append">
           <InputGroupText>+</InputGroupText>
@@ -86,15 +86,15 @@ function SingleSelect() {
       <div className="question-buttons">
         <Button
           className="survey-main-btn"
-          onClick={addQuestion}
-          disabled={isButtonDisabled()}
+          disabled={isQuestionAddPublishDisabled()}
+          onClick={addQuestionClickAction}
         >
           Add Question
         </Button>
         <Button
           className="survey-main-btn"
+          disabled={isQuestionAddPublishDisabled()}
           onClick={publishQuestion}
-          disabled={isButtonDisabled()}
         >
           Publish
         </Button>

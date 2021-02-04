@@ -1,7 +1,7 @@
 import React from "react";
+import { useParams, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Button } from "reactstrap";
-import { useHistory, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { surveySlice } from "../store/surveySlice";
 
@@ -9,20 +9,20 @@ function ConfirmSurvey() {
   const { surveyId } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
-
   const survey = useSelector((globalStore) =>
-    globalStore.surveys.map((s) => s.surveyId === surveyId)
+    globalStore.surveys.find((s) => s.surveyId === surveyId)
   );
 
-  const confirmandPublishSurvey = () => {
+  const confirmAndPublishSurvey = () => {
     dispatch(surveySlice.actions.markPublished({ surveyId }));
-    history.pushState("/");
+    history.push("/");
   };
+
   return (
     <>
       {survey.questions.map((q) => (
         <>
-          <h4>{q.questions}</h4>
+          <h4>{q.question}</h4>
           {q.type === "single" ? (
             <>
               <label>{q.options[0]}</label>
@@ -42,9 +42,10 @@ function ConfirmSurvey() {
               <input type="checkbox" />
             </>
           )}
+          <hr />
         </>
       ))}
-      <Button className="survey-main-btn" onClick={confirmandPublishSurvey}>
+      <Button className="survey-main-btn" onClick={confirmAndPublishSurvey}>
         Confirm Survey
       </Button>
     </>
